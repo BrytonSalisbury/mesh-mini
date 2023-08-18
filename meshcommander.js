@@ -25,32 +25,31 @@ function CreateMeshCommanderServer(args) {
   return obj;
 }
 
-function InstallModules(modules, func) {
-  if (modules.length == 0) {
-    func();
-    return;
+function launchBrowser() {
+  var obj = {};
+  obj.args = require("minimist")(process.argv.slice(2)); // slice off the first 2 default args
+  console.log(obj.args.browser);
+
+  const port = obj.args.port || 3000;
+  let browser = "";
+  switch (obj.args.browser) {
+    case "chrome":
+      browser = "chrome";
+      break;
+
+    case "edge":
+      browser = "msedge";
+      break;
+
+    default:
+      browser = "chrome";
+      break;
   }
-  InstallModule(modules.shift(), InstallModules, modules, func);
+
+  var child_process = require("child_process");
+  child_process.exec(`start ${browser} http://localhost:${port}`);
 }
 
-function InstallModule(modulename, func, tag1, tag2) {
-  try {
-    var module = require(modulename);
-    module = null;
-    func(tag1, tag2);
-  } catch (e) {
-    console.log("Installing " + modulename + "...");
-    var child_process = require("child_process");
-    child_process.exec(
-      "npm install --save " + modulename,
-      function (error, stdout, stderr) {
-        func(tag1, tag2);
-        return;
-      }
-    );
-  }
-}
+launchBrowser();
 
-InstallModules(["minimist", "express", "express-ws"], function () {
-  CreateMeshCommanderServer().Start();
-});
+CreateMeshCommanderServer().Start();
