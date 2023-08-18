@@ -21,6 +21,8 @@ Testing was done on Windows 11 using Node.js 20.5.1.
 3. Run `npm run build` to build the .exe.
 4. The contents will be copied into the subfolder 'out' which will contain the .exe and the .html files needed to run the .exe.
 
+`npm run clean` can be used to clean the working directory.
+
 ### Executable flags
 
 The .exe can be passed a --port and --browser flag to specify the port to run on, and the browser to autolaunch.
