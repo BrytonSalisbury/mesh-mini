@@ -10,6 +10,8 @@ The webapp can be run by simply invoking `node meshcommander.js`, but the intent
 
 Node.js 19.7.0 or greater is required for the use of the --experimental-sea-config flag.
 
+[node-v20.5.1](https://nodejs.org/dist/v20.5.1/node-v20.5.1-x64.msi)
+
 Testing was done on Windows 11 using Node.js 20.5.1.
 
 ### To build the .exe from source
