@@ -40,13 +40,18 @@ function launchBrowser() {
       browser = "msedge";
       break;
 
+    case "none":
+      browser = null;
+      break;
+
     default:
       browser = "chrome";
       break;
   }
-
-  var child_process = require("child_process");
-  child_process.exec(`start ${browser} http://localhost:${port}`);
+  if (browser) {
+    var child_process = require("child_process");
+    child_process.exec(`start ${browser} http://localhost:${port}`);
+  }
 }
 
 launchBrowser();

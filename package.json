@@ -4,13 +4,7 @@
     "email": "ysainthilaire@hotmail.com",
     "name": "Ylian Saint-Hilaire"
   },
-  "bin": {
-    "meshcommander": "./bin/meshcommander"
-  },
   "dependencies": {
-    "@rollup/plugin-commonjs": "^25.0.4",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.2.0",
     "express": "^4.18.2",
     "express-ws": "^2.0.0",
     "minimist": "^1.2.8"
@@ -20,8 +14,7 @@
     "*.js",
     "license.txt",
     "readme.txt",
-    "public",
-    "bin"
+    "public"
   ],
   "homepage": "http://meshcommander.com",
   "keywords": [
@@ -38,14 +31,27 @@
       "name": "Bryton Salisbury"
     }
   ],
-  "name": "meshcommander",
-  "readme": "readme.txt",
+  "name": "mesh-mini",
+  "readme": "readme.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ylianst/MeshCommander.git"
+    "url": "https://github.com/BrytonSalisbury/mesh-mini"
   },
   "scripts": {
-    "build": "rollup --config .\\rollup.config.mjs && node --experimental-sea-config sea-config.json && node -e \"require('fs').copyFileSync(process.execPath, 'mesh-mini.exe')\" && npx postject mesh-mini.exe NODE_SEA_BLOB .\\build\\sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --overwrite",
-    "clean": "del build\\* /q && del mesh-mini.exe"
+    "install-deps": "npm i",
+    "make-dir": "mkdir build out",
+    "bundle": "rollup --config .\\config\\rollup.config.mjs",
+    "sea-blob": "node --experimental-sea-config .\\config\\sea-config.json",
+    "copy-node": "node -e \"require('fs').copyFileSync(process.execPath, 'mesh-mini.exe')\" && move mesh-mini.exe .\\out ",
+    "inject-node": "npx postject .\\out\\mesh-mini.exe NODE_SEA_BLOB .\\build\\sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --overwrite",
+    "copy-public": "xcopy public .\\out\\public\\ /D",
+    "build": "npm run install-deps && npm run make-dir && npm run bundle && npm run sea-blob && npm run copy-node && npm run inject-node && npm run copy-public",
+    "clean": "rmdir build out /q /s"
+  },
+  "devDependencies": {
+    "rollup": "^3.28.0",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.0"
   }
 }
