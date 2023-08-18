@@ -18,7 +18,7 @@ function CreateMeshCommanderServer(args) {
   // Stop the Meshcommander server
   obj.Stop = function () {
     if (obj.webserver) {
-      delete obj.webserver;
+      obj.webserver = null;
     }
   };
 
@@ -36,7 +36,7 @@ function InstallModules(modules, func) {
 function InstallModule(modulename, func, tag1, tag2) {
   try {
     var module = require(modulename);
-    delete module;
+    module = null;
     func(tag1, tag2);
   } catch (e) {
     console.log("Installing " + modulename + "...");

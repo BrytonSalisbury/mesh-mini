@@ -1,5 +1,5 @@
 {
-  "main": "bundled-mesh\\meshcommander.js",
-  "output": "sea-prep.blob",
+  "main": "build\\bundled-mesh.js",
+  "output": "build\\sea-prep.blob",
   "disableExperimentalSEAWarning": true
 }

@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^25.0.4",
-    "@rollup/plugin-html": "^1.0.2",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.0",
     "express": "^4.18.2",
@@ -33,11 +32,10 @@
     "Remote Desktop"
   ],
   "license": "Apache-2.0",
-  "main": "bundled-mesh.js\\meshcommander.js",
   "maintainers": [
     {
-      "email": "ysainthilaire@hotmail.com",
-      "name": "ysainthilaire"
+      "email": "brytonsalisbury@gmail.com",
+      "name": "Bryton Salisbury"
     }
   ],
   "name": "meshcommander",
@@ -46,5 +44,8 @@
     "type": "git",
     "url": "https://github.com/Ylianst/MeshCommander.git"
   },
-  "scripts": {}
+  "scripts": {
+    "build": "rollup --config .\\rollup.config.mjs && node --experimental-sea-config sea-config.json && node -e \"require('fs').copyFileSync(process.execPath, 'mesh-mini.exe')\" && npx postject mesh-mini.exe NODE_SEA_BLOB .\\build\\sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --overwrite",
+    "clean": "del build\\* /q && del mesh-mini.exe"
+  }
 }
