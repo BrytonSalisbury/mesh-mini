@@ -6,7 +6,7 @@ The code has been modified to be bundled and injected into a copy of node.exe wh
 
 The webapp can be run by simply invoking `node meshcommander.js`, but the intention of this repo is to bundle and inject the program into a .exe for ease of use.
 
-### Prerequisites
+## Prerequisites
 
 Node.js 19.7.0 or greater is required for the use of the --experimental-sea-config flag.
 
@@ -14,7 +14,7 @@ Node.js 19.7.0 or greater is required for the use of the --experimental-sea-conf
 
 Testing was done on Windows 11 using Node.js 20.5.1.
 
-### To build the .exe from source
+## To build the .exe from source
 
 1. Clone/download the repo and open a cmd prompt inside the folder
 2. Run `npm i` to download the prerequisites.
@@ -23,7 +23,7 @@ Testing was done on Windows 11 using Node.js 20.5.1.
 
 `npm run clean` can be used to clean the working directory.
 
-### Executable flags
+## Executable flags
 
 The .exe can be passed a --port and --browser flag to specify the port to run on, and the browser to autolaunch.
 
