@@ -16,9 +16,10 @@ Testing was done on Windows 11 using Node.js 20.5.1.
 
 ### To build the .exe from source
 
-1. Run `npm i` to download the prerequisites.
-2. Run `npm run build` to build the .exe.
-3. The contents will be copied into the subfolder 'out' which will contain the .exe and the .html files needed to run the .exe.
+1. Clone/download the repo and open a cmd prompt inside the folder
+2. Run `npm i` to download the prerequisites.
+3. Run `npm run build` to build the .exe.
+4. The contents will be copied into the subfolder 'out' which will contain the .exe and the .html files needed to run the .exe.
 
 ### Executable flags
 
