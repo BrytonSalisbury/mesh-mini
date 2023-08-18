@@ -28,7 +28,6 @@ function CreateMeshCommanderServer(args) {
 function launchBrowser() {
   var obj = {};
   obj.args = require("minimist")(process.argv.slice(2)); // slice off the first 2 default args
-  console.log(obj.args.browser);
 
   const port = obj.args.port || 3000;
   let browser = "";
