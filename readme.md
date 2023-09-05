@@ -1,3 +1,7 @@
+### Download [here](https://github.com/BrytonSalisbury/mesh-mini/releases/download/v1.0.1/mesh-mini.zip)
+
+<hr>
+
 # Mesh-Mini
 
 Mesh-Mini is a fork of the npm package MeshCommander, due to the ending of support of the MeshCommander application located here - https://www.meshcommander.com/meshcommander.
