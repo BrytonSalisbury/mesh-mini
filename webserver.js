@@ -153,7 +153,7 @@ module.exports.CreateWebServer = function (args) {
     if (args.any != null) {
         obj.app.listen(port, function () { console.log("MeshCommander running on http://*:" + port + '.'); });
     } else {
-        obj.app.listen(port, '127.0.0.1', function () { console.log("MeshCommander running on http://127.0.0.1:" + port + '.'); });
+        obj.app.listen(port, '0.0.0.0', function () { console.log("MeshCommander running on http://localhost:" + port + '.'); });
     }
 
     return obj;
