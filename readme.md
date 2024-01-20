@@ -26,6 +26,20 @@ Browser options are:
 - edge
 - none
 
+## Docker
+
+A Docker image can be pulled and then run with the following commands:
+
+`docker pull brytonsalisbury/mesh-mini`
+
+`docker run -p 3000:3000 brytonsalisbury/mesh-mini`
+
+The Docker image can be built from source using:
+
+`docker compose up --build`
+
+https://hub.docker.com/r/brytonsalisbury/mesh-mini
+
 ## To build the .exe from source
 
 ### Prerequisites
