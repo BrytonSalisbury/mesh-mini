@@ -14,6 +14,9 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
+RUN echo "[]" > computers.json
+RUN chown node:node computers.json
+RUN chmod 600 computers.json
 USER node
 COPY . .
 EXPOSE 3000
