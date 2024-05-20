@@ -47650,6 +47650,24 @@ label {
 
   // BRYTON FUNCTIONS
   function pushComputersToServer() {
+    fetch('/api/computerlist').then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    }).then(data => {
+      if (data.error) {
+        messagebox("Error", data.error);
+      } else {
+        QH('id_dialogMessage', `There are ${computerlist.length} computers in your browser and ${data.length} computers on the server. Push computer list to server?`);
+        setDialogMode(1, "Push Computers to Server", 3, pushComputersOk);
+      }
+    }).catch(error => {
+      messagebox("Error", error);
+    });
+  }
+
+  function pushComputersOk() {
     const computerList = localStorage.getItem('computers')
 
     fetch("/api/computerlist", {
@@ -47684,6 +47702,24 @@ label {
       if (data.error) {
         messagebox("Error", data.error);
       } else {
+        QH('id_dialogMessage', `There are ${data.length} computers on the server and ${computerlist.length} computers in your browser. Pull computer list from server?`);
+        setDialogMode(1, "Pull Computers from Server", 3, pullComputersOk);
+      }
+    }).catch(error => {
+      messagebox("Error", error);
+    });
+  }
+
+  function pullComputersOk(computers) {
+    fetch('/api/computerlist').then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    }).then(data => {
+      if (data.error) {
+        messagebox("Error", data.error);
+      } else {
         localStorage.setItem('computers', JSON.stringify(data));
         computerlist = data
         updateComputerList();
@@ -47693,8 +47729,6 @@ label {
       messagebox("Error", error);
     });
   }
-
-
 
   function showIconSelector() {
     if (xxdialogMode) return;
