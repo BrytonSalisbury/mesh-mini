@@ -7,21 +7,25 @@ const bodyParser = require("body-parser");
 ApiRouter.use(bodyParser.json({ limit: "10mb" }));
 ApiRouter.use(computerListCheck);
 
+const computerPath = process.env.COMPUTER_PATH
+  ? process.env.COMPUTER_PATH
+  : "./computers.json";
+
 ApiRouter.get("/computerlist", (_req, res) => {
-  const computerList = JSON.parse(readFileSync("computers.json"));
+  const computerList = JSON.parse(readFileSync(computerPath));
   res.json(computerList);
 });
 
 ApiRouter.post("/computerlist", (req, res) => {
-  writeFileSync("computers.json", JSON.stringify(req.body));
+  writeFileSync(computerPath, JSON.stringify(req.body));
   res.json(req.body);
 });
 
 function computerListCheck(_req, _res, next) {
   try {
-    readFileSync("computers.json");
+    readFileSync(computerPath);
   } catch (err) {
-    writeFileSync("computers.json", JSON.stringify([]));
+    writeFileSync(computerPath, JSON.stringify([]));
   }
   next();
 }
