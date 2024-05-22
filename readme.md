@@ -6,7 +6,7 @@ For regular use, download the client version.
 
 ### [Server Version]()
 
-The server version is intended to be used in a distributed enviroment where there will be multiple clients accessing a single instance of Mesh-Mini. A computer list can be stored on the server, then accessed remotely from clients so only a single computer list needs to be maintained. Docker would be recommended for this, explained further below.
+The server version is intended to be used in a distributed environment where there will be multiple clients accessing a single instance of Mesh-Mini. A computer list can be stored on the server, then accessed remotely from clients so only a single computer list needs to be maintained. Docker would be recommended for this, explained further below.
 
 # Mesh-Mini
 
@@ -44,11 +44,11 @@ The Docker image can be built from source using:
 
 ### Note
 
-The Docker image is running the 'server' version of Mesh-Mini which can store a central computer list inside the container. The container can be passed an enviroment variable, _COMPUTER_PATH_, which controls where the computer list is stored, i.e `COMPUTER_PATH=/config/computers.json`
+The Docker image is running the 'server' version of Mesh-Mini which can store a central computer list inside the container. The container can be passed an environment variable, _COMPUTER_PATH_, which controls where the computer list is stored, i.e `COMPUTER_PATH=/config/computers.json`
 
 This can be used in conjunction with a mounted volume so a computer list can be provided and maintained from local storage.
 
-If the enviroment variable isn't provided, when a computer list is pushed to the server it will be stored in _/usr/src/app/computers.json_
+If the environment variable isn't provided, when a computer list is pushed to the server it will be stored in _/usr/src/app/computers.json_
 
 https://hub.docker.com/r/brytonsalisbury/mesh-mini
 
