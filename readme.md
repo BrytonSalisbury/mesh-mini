@@ -4,7 +4,7 @@
 
 For regular use, download the client version.
 
-### [Server Version](https://github.com/BrytonSalisbury/mesh-mini/releases/download/1.0.2/mesh-mini-server.zip)
+### [Server Version](https://github.com/BrytonSalisbury/mesh-mini/releases/download/v1.0.2/mesh-mini-server.zip)
 
 The server version is intended to be used in a distributed environment where there will be multiple clients accessing a single instance of Mesh-Mini. A computer list can be stored on the server, then accessed remotely from clients so only a single computer list needs to be maintained. Docker would be recommended for this, explained further below.
 
