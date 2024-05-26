@@ -32,7 +32,7 @@ Browser options are:
 
 ## Docker
 
-A Docker image can be pulled and then run with the following commands, where {architecture} is amd64 _(Windows)_ or arm64 _(Mac)_ depending on your platform:
+A Docker image can be pulled and then run with the following commands, where {architecture} is amd64 or arm64 depending on your platform:
 
 `docker pull brytonsalisbury/mesh-mini:{architecture}`
 
