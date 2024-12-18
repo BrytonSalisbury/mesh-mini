@@ -39,7 +39,7 @@
   },
   "scripts": {
     "install-deps": "npm i",
-    "make-dir": "mkdir build out",
+    "make-dir": "mkdir -p build out",
     "bundle": "rollup --config ./config/rollup.config.mjs",
     "sea-blob": "node --experimental-sea-config ./config/sea-config.json",
     "copy-node": "node -e \"require('fs').copyFileSync(process.execPath, './out/mesh-mini.exe')\"",
