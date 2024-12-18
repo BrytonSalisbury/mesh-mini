@@ -5,7 +5,7 @@ import json from "@rollup/plugin-json";
 export default {
   input: ["meshcommander.js"],
   output: {
-    file: ".\\build\\bundled-mesh.js",
+    file: "./build/bundled-mesh.js",
     format: "cjs",
   },
   plugins: [commonjs(), nodeResolve(), json()],
