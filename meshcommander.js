@@ -39,6 +39,10 @@ function launchBrowser() {
     case "edge":
       browser = "msedge";
       break;
+      
+    case "firefox":
+      browser = "firefox";
+      break;
 
     case "none":
       browser = null;
