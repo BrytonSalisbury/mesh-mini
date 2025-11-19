@@ -28,6 +28,7 @@ Browser options are:
 
 - chrome
 - edge
+- firefox
 - none
 
 ## Docker
