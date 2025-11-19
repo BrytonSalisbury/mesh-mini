@@ -39,12 +39,12 @@
   },
   "scripts": {
     "install-deps": "npm i",
-    "make-dir": "mkdir build out",
-    "bundle": "rollup --config .\\config\\rollup.config.mjs",
-    "sea-blob": "node --experimental-sea-config .\\config\\sea-config.json",
-    "copy-node": "node -e \"require('fs').copyFileSync(process.execPath, 'mesh-mini.exe')\" && move mesh-mini.exe .\\out ",
-    "inject-node": "npx postject .\\out\\mesh-mini.exe NODE_SEA_BLOB .\\build\\sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --overwrite",
-    "copy-public": "xcopy public .\\out\\public\\ /D /E",
+    "make-dir": "mkdir -p build out",
+    "bundle": "rollup --config ./config/rollup.config.mjs",
+    "sea-blob": "node --experimental-sea-config ./config/sea-config.json",
+    "copy-node": "node -e \"require('fs').copyFileSync(process.execPath, './out/mesh-mini.exe')\"",
+    "inject-node": "npx postject ./out/mesh-mini.exe NODE_SEA_BLOB ./build/sea-prep.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 --overwrite",
+    "copy-public": "cp -ar --update ./public/ ./out/",
     "success": "echo Build Successful!",
     "build": "npm run install-deps && npm run make-dir && npm run bundle && npm run sea-blob && npm run copy-node && npm run inject-node && npm run copy-public && npm run success",
     "clean": "rmdir build out /q /s"
