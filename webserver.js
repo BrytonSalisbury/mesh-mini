@@ -45,45 +45,90 @@ module.exports.CreateWebServer = function (args) {
   // API router to push and pull computers
   obj.app.use("/api", obj.apiRouter);
 
+  // Pages are shipped as "default-<language>.htm", with "default.htm" holding English. The
+  // available set is read from the public folder so it can never drift from what is on disk.
+  var availableLanguages = [];
+  try {
+    availableLanguages = obj.fs
+      .readdirSync(obj.path.join(__dirname, "public"))
+      .map(function (name) {
+        var match = /^default-(.+)\.htm$/.exec(name);
+        return match == null ? null : match[1].toLowerCase();
+      })
+      .filter(function (language) {
+        return language != null;
+      });
+  } catch (ex) {
+    availableLanguages = ["de", "es", "fr", "it", "ja", "ko", "nl", "pt", "ru", "zh-chs"];
+  }
+
+  // Modern and regional tags mapped onto the legacy codes the page files are named with, the
+  // same way MeshCentral maps them. Bare "zh" resolves to Simplified Chinese.
+  var languageAliases = {
+    zh: "zh-chs",
+    "zh-cn": "zh-chs",
+    "zh-hans": "zh-chs",
+    "zh-my": "zh-chs",
+    "zh-sg": "zh-chs",
+    "zh-hant": "zh-cht",
+    "zh-hk": "zh-cht",
+    "zh-mo": "zh-cht",
+    "zh-tw": "zh-cht",
+    "pt-br": "pt",
+  };
+
+  // Split an Accept-Language header into tags ordered by descending quality.
+  function getAcceptedLanguages(header) {
+    if (header == null) return [];
+    return header
+      .split(",")
+      .map(function (entry) {
+        var parts = entry.trim().split(";");
+        var quality = 1;
+        for (var i = 1; i < parts.length; i++) {
+          var match = /^q=([0-9.]+)$/.exec(parts[i].trim());
+          if (match != null) quality = parseFloat(match[1]);
+        }
+        return { tag: parts[0].trim().toLowerCase(), quality: isNaN(quality) ? 0 : quality };
+      })
+      .filter(function (entry) {
+        return entry.tag.length > 0 && entry.tag != "*" && entry.quality > 0;
+      })
+      .sort(function (a, b) {
+        return b.quality - a.quality;
+      })
+      .map(function (entry) {
+        return entry.tag;
+      });
+  }
+
+  // Resolve the browser languages to a page suffix. An empty string means English "default.htm".
+  // A regional tag falls back to its base language, so zh-TW lands on Traditional Chinese when
+  // that page is present and on Simplified Chinese rather than a 404 when it is not.
+  function resolveLanguage(header) {
+    var tags = getAcceptedLanguages(header);
+    for (var i = 0; i < tags.length; i++) {
+      var tag = tags[i];
+      var candidates = [];
+      if (languageAliases[tag] != null) candidates.push(languageAliases[tag]);
+      candidates.push(tag);
+      var dash = tag.indexOf("-");
+      if (dash > 0) {
+        var base = tag.substring(0, dash);
+        if (languageAliases[base] != null) candidates.push(languageAliases[base]);
+        candidates.push(base);
+      }
+      for (var j = 0; j < candidates.length; j++) {
+        if (candidates[j] == "en") return "";
+        if (availableLanguages.indexOf(candidates[j]) >= 0) return "-" + candidates[j];
+      }
+    }
+    return "";
+  }
+
   // Indicates that any request to "/" should be redirected to "/default.htm" which is the Mesh Commander web application.
   obj.app.get("/", function (req, res) {
-    // Select the best supported language for this browser
-    var language = null,
-      availableLanguages = [
-        "en",
-        "de",
-        "es",
-        "fr",
-        "it",
-        "ja",
-        "ko",
-        "nl",
-        "pt",
-        "ru",
-        "zh",
-      ];
-    if (req.headers["accept-language"] != null) {
-      var acceptLanguageSplit = req.headers["accept-language"].split(";");
-      for (var i in acceptLanguageSplit) {
-        var acceptLanguageSplitEx = acceptLanguageSplit[i].split(",");
-        for (var j in acceptLanguageSplitEx) {
-          if (acceptLanguageSplitEx[j].startsWith("q=") == false) {
-            var l = acceptLanguageSplitEx[j].toLowerCase().split("-")[0];
-            if (language == null && availableLanguages.indexOf(l) >= 0) {
-              language = l;
-            }
-          }
-        }
-      }
-    }
-    if (language == null || language == "en") {
-      language = "";
-    } else {
-      if (language == "zh") {
-        language = "zh-chz";
-      }
-      language = "-" + language;
-    }
+    var language = resolveLanguage(req.headers["accept-language"]);
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
       Pragma: "no-cache",
